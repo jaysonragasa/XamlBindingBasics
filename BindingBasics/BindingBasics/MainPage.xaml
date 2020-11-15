@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BindingBasics.MainPage"
+             xmlns:local="clr-namespace:BindingBasics.ViewModels"
+             >
+    
+    <!--bind our ViewModel_MainPage to this page-->
+    <ContentPage.BindingContext>
+        <local:ViewModel_MainPage />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style TargetType="Grid" x:Key="Separator">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="BackgroundColor" Value="#FF007ACC" />
+            <Setter Property="Margin" Value="0,10" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20">
+                <!--no binding-->
+                <Label x:Name="lblGreet" Text="" />
+                <Button x:Name="btnGeet" Text="Greet" />
+
+                <Grid Style="{StaticResource Separator}" />
+
+                <!--with binding-->
+                <Label Text="{Binding Message}" />
+                <Button Text="Greet" Command="{Binding Command_Greet}" />
+
+                <Grid Style="{StaticResource Separator}" />
+
+                <Button Text="Add Random Name" Command="{Binding Command_AddRandomName}" />
+
+                <Grid Style="{StaticResource Separator}" />
+
+                <!--bind listview / collectionview-->
+                <Label Text="ListView" />
+                <ListView ItemsSource="{Binding PersonCollection}" HeightRequest="100">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Name}" FontSize="20" />
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+                <Grid Style="{StaticResource Separator}" />
+                
+                <Label Text="CollectionView" />
+                <CollectionView ItemsSource="{Binding PersonCollection}" HeightRequest="100">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Name}" FontSize="20" />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid Style="{StaticResource Separator}" />
+                
+                <Label Text="BindableLayout" />
+                <StackLayout BindableLayout.ItemsSource="{Binding PersonCollection}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding Name}" FontSize="20" />
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
