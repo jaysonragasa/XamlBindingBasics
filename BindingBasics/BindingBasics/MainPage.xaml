@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="BindingBasics.MainPage"
              xmlns:local="clr-namespace:BindingBasics.ViewModels"
+             x:Name="this"
              >
     
     <!--bind our ViewModel_MainPage to this page-->
@@ -55,7 +56,14 @@
                 <CollectionView ItemsSource="{Binding PersonCollection}" HeightRequest="100">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding Name}" FontSize="20" />
+                            <Label Text="{Binding Name}" FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.Command_GreetName, Source={x:Reference this}}" 
+                                        CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
@@ -66,7 +74,13 @@
                 <StackLayout BindableLayout.ItemsSource="{Binding PersonCollection}">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate>
-                            <Label Text="{Binding Name}" FontSize="20" />
+                            <Label Text="{Binding Name}" FontSize="20">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding Command_GreetName, Source={x:Reference this}}" 
+                                        CommandParameter="{Binding .}" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </DataTemplate>
                     </BindableLayout.ItemTemplate>
                 </StackLayout>

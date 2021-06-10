@@ -34,13 +34,15 @@ namespace BindingBasics.ViewModels
 
         #region commands
         public ICommand Command_Greet { get; private set; }
-        public ICommand Command_AddRandomName { get; private set; }
+        public ICommand Command_AddRandomName { get; set; }
+        public ICommand Command_GreetName { get; private set; }
         #endregion
 
         #region ctor
         public ViewModel_MainPage()
         {
             if (Command_Greet == null) Command_Greet = new Command(Greet);
+            if (Command_GreetName == null) Command_GreetName = new Command<Model_Person>(GreetPerson);
             if (Command_AddRandomName == null) Command_AddRandomName = new Command(AddRandomName);
         }
         #endregion
@@ -49,6 +51,11 @@ namespace BindingBasics.ViewModels
         void Greet()
         {
             this.Message = "Hello World";
+        }
+
+        public void GreetPerson(Model_Person model)
+        {
+            this.Message = $"Hello {model.Name}";
         }
 
         void AddRandomName()
